@@ -1,0 +1,34 @@
+<head>
+  <title>temp-forms3</title>
+</head>
+
+<body>
+
+  <div class="container">
+      <h1>Welcome to Meteor!</h1>
+      {{> testForm}}
+  </div>
+
+
+</body>
+
+<template name="hello">
+  <button>Click Me</button>
+  <p>You've pressed the button {{counter}} times.</p>
+</template>
+
+<!-- Wrapped input with form-wide schema -->
+<template name="testForm">
+  {{#basicFormBlock schema=schema action=action}}
+    {{> basicInput field='testField'}}
+  {{/basicFormBlock}}
+</template>
+
+<template name="basicInput">
+    <strong>{{label}}</strong>
+    <br>
+    <input placeholder={{instructions}} class="reactive-element" value={{value}}>
+  {{#if submitted}}
+    {{#if errorMessage}}<p class="error-message">{{errorMessage}}</p>{{/if}}
+  {{/if}}
+</template>
