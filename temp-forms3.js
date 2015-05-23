@@ -1,27 +1,20 @@
 if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault('counter', 0);
 
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
-    }
-  });
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
-    }
-  });
-
-  Template['testForm'].helpers({
+  Template['testLogin'].helpers({
     schema: function () {
       return new SimpleSchema({
         testField: {
           type: String,
+          label: 'Username',
           max: 3,
           instructions: "Enter a value!"
+        },
+        testEmail: {
+          type: String,
+          label:'Email',
+          regEx: SimpleSchema.RegEx.Email,
+          instructions: "Enter a valid email!"
         }
       });
     },
@@ -38,18 +31,20 @@ if (Meteor.isClient) {
     }
   });
 
+
   ReactiveForms.createFormBlock({
-    template: 'basicFormBlock',
+    template: 'coreFormBlock',
     submitType: 'normal'
   });
 
   ReactiveForms.createElement({
-    template: 'basicInput',
+    template: 'coreInput',
     validationEvent: 'keyup',
     reset: function (el) {
       $(el).val('');
     }
   });
+
 }
 
 if (Meteor.isServer) {

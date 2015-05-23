@@ -3,32 +3,111 @@
 </head>
 
 <body>
-
   <div class="container">
       <h1>Welcome to Meteor!</h1>
-      {{> testForm}}
+
+      {{> testLogin}}
   </div>
-
-
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+
+<template name="testLogin">
+    {{#coreFormBlock schema=schema action=action}}
+        {{> coreInput field='testField'}}
+        {{> coreInput field='testEmail'}}
+    {{/coreFormBlock}}
 </template>
 
-<!-- Wrapped input with form-wide schema -->
-<template name="testForm">
-  {{#basicFormBlock schema=schema action=action}}
-    {{> basicInput field='testField'}}
-  {{/basicFormBlock}}
-</template>
-
-<template name="basicInput">
+<template name="coreInput">
     <strong>{{label}}</strong>
     <br>
+
+  {{!-- The form elements in these components need to have the reactive-element class --}}
     <input placeholder={{instructions}} class="reactive-element" value={{value}}>
+
   {{#if submitted}}
     {{#if errorMessage}}<p class="error-message">{{errorMessage}}</p>{{/if}}
   {{/if}}
 </template>
+
+<template name="coreFormBlock">
+    <form>
+
+      {{!-- Using a helper to pass in form-level context --}}
+      {{> UI.contentBlock
+      data=data
+      context=context
+      }}
+
+        <p>
+            <button type="submit">Submit</button>
+      <span>
+        {{#if loading}}
+            Loading...
+        {{/if}}
+
+        {{#if invalid}}
+            Can't submit! There are {{invalidCount}} invalid fields!
+        {{/if}}
+
+        {{#if failed}}
+            There was a problem submitting the form!
+        {{/if}}
+
+        {{#if success}}
+            Success! Form submitted (to nowhere)
+        {{/if}}
+      </span>
+        </p>
+
+    </form>
+</template>
+
+<!-- Deprecated. Keeping for compatibility -->
+<template name="coreForm">
+    <form>
+
+      {{!-- Using a helper to pass in form-level context --}}
+      {{> UI.contentBlock
+      data=data
+      context=context
+      }}
+
+        <p>
+            <button type="submit">Submit</button>
+      <span>
+        {{#if loading}}
+            Loading...
+        {{/if}}
+
+        {{#if invalid}}
+            Can't submit! There are {{invalidCount}} invalid fields!
+        {{/if}}
+
+        {{#if failed}}
+            There was a problem submitting the form!
+        {{/if}}
+
+        {{#if success}}
+            Success! Form submitted (to nowhere)
+        {{/if}}
+      </span>
+        </p>
+
+    </form>
+</template>
+
+<template name="defaultCoreFormBlock">
+    <form>
+
+      {{!-- Using a helper to pass in form-level context --}}
+      {{> UI.contentBlock
+      data=data
+      context=context
+      }}
+
+    </form>
+</template>
+
+
+
