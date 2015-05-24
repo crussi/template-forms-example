@@ -9,3 +9,4 @@ autopublish
 insecure
 templates:forms
 twbs:bootstrap
+accounts-password

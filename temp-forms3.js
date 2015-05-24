@@ -1,20 +1,22 @@
 if (Meteor.isClient) {
 
 
-  Template['testLogin'].helpers({
+  Template['Login'].helpers({
     schema: function () {
       return new SimpleSchema({
-        testField: {
-          type: String,
-          label: 'Username',
-          max: 3,
-          instructions: "Enter a value!"
-        },
-        testEmail: {
+        email: {
           type: String,
           label:'Email',
           regEx: SimpleSchema.RegEx.Email,
-          instructions: "Enter a valid email!"
+          instructions: "Valid email is required"
+
+        },
+        password: {
+          type: String,
+          label: 'Password',
+          min: 6,
+          instructions: "Password of at least 6 chars"
+
         }
       });
     },
@@ -25,20 +27,42 @@ if (Meteor.isClient) {
         console.log("[forms] HTML elements with `.reactive-element` class!", els);
         console.log("[forms] Callbacks!", callbacks);
         console.log("[forms] Changed fields!", changed);
-        callbacks.success(); // Display success message.
-        callbacks.reset();   // Run each Element's custom `reset` function to clear the form.
+
+        Meteor.loginWithPassword(this.email, this.password, function(err) {
+          if (err) {
+            // The user might not have been found, or their passwword
+            // could be incorrect. Inform the user that their
+            // login attempt has failed.
+            console.log("login with password failed");
+            callbacks.failed(); // Display error message.
+          } else {
+            // The user has been logged in.
+            console.log("login with password success");
+            callbacks.success(); // Display success message.
+            callbacks.reset();
+          }
+
+        });
+           // Run each Element's custom `reset` function to clear the form.
       };
+    }
+  });
+
+  Template['Login'].events({
+    'click #register' : function(e, t) {
+      e.preventDefault();
+      console.log("register");
     }
   });
 
 
   ReactiveForms.createFormBlock({
-    template: 'coreFormBlock',
+    template: 'loginFormBlock',
     submitType: 'normal'
   });
 
   ReactiveForms.createElement({
-    template: 'coreInput',
+    template: 'loginInput',
     validationEvent: 'keyup',
     reset: function (el) {
       $(el).val('');
