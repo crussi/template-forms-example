@@ -10,3 +10,5 @@ insecure
 templates:forms
 twbs:bootstrap
 accounts-password
+meteorhacks:flow-layout
+meteorhacks:flow-router
