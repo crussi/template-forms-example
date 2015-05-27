@@ -43,15 +43,24 @@
     </div>
 </template>
 
+<template name="app">
+    <div class="container">
+        <p>app</p>
+        <a href="#" id="logout">Logout </a>
+    </div>
+</template>
+
 <template name="help-login">
     <div class="container">
         <p>help login</p>
+        <a href="#" id="back">back</a>
     </div>
 </template>
 
 <template name="help-register">
     <div class="container">
         <p>help register</p>
+        <a href="#" id="back">back</a>
     </div>
 </template>
 
@@ -89,6 +98,9 @@
 
 <template name="authFormBlock">
     <form class="form-auth">
+        <button id="btn-google" type="button" class="btn btn-lg btn-primary btn-block">
+            <i class="fa fa-google"></i> Sign in with Google
+        </button>
         {{!-- Using a helper to pass in form-level context --}}
         {{> Template.contentBlock data=data context=context }}
         {{#if isLogin}}

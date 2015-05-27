@@ -1,4 +1,7 @@
 if (Meteor.isClient) {
+    SimpleSchema.messages({
+      "passwordMismatch": "Passwords do not match"
+    });
 
   Template['authFormBlock'].helpers({
     isLogin : function() {
@@ -48,6 +51,7 @@ if (Meteor.isClient) {
             console.log("login with password success");
             callbacks.success(); // Display success message.
             callbacks.reset();
+            FlowLayout.render('layout-auth', { content: "app" });
           }
 
         });
@@ -77,9 +81,14 @@ if (Meteor.isClient) {
           type: String,
           label: 'Confirm password',
           min: 6,
-          instructions: "Password of at least 6 chars"
-
-        }      });
+          instructions: "Password of at least 6 chars",
+          //custom: function () {
+          //  if (this.value !== this.field('password').value) {
+          //    return "passwordMismatch";
+          //  }
+          //}
+        }
+      });
     },
     action: function () {
       return function (els, callbacks, changed) {
@@ -89,7 +98,7 @@ if (Meteor.isClient) {
         console.log("[forms] Callbacks!", callbacks);
         console.log("[forms] Changed fields!", changed);
 
-        Meteor.createUser({ email: this.email, password: this.password}, function(err) {
+        Accounts.createUser({ email: this.email, password: this.password}, function(err) {
           if (err) {
             // The user might not have been found, or their passwword
             // could be incorrect. Inform the user that their
@@ -101,6 +110,7 @@ if (Meteor.isClient) {
             console.log("register with password success");
             callbacks.success(); // Display success message.
             callbacks.reset();
+            FlowLayout.render('layout-unauth', { content: "login" });
           }
 
         });
@@ -109,6 +119,7 @@ if (Meteor.isClient) {
     }
   });
 
+
   Template['authFormBlock'].events({
     'click #help' : function(e, t) {
       e.preventDefault();
@@ -116,7 +127,22 @@ if (Meteor.isClient) {
 
       FlowLayout.render('layout-unauth', { content: "help-" + this.type });
 
-    }
+    },
+    'click #btn-google' : function(e, t) {
+      e.preventDefault();
+      console.log("login with Google");
+      return Meteor.loginWithGoogle({
+        requestPermissions: ['email']
+      }, function(error) {
+        if (error) {
+          console.log('google login error');
+          return console.log(error.reason);
+        } else {
+          console.log('google login success');
+          FlowLayout.render('layout-auth', { content: "app" });
+        }
+      });
+  }
   });
 
   Template['loginform'].events({
@@ -124,10 +150,6 @@ if (Meteor.isClient) {
       e.preventDefault();
       console.log("register");
       FlowLayout.render('layout-unauth', { content: "register"});
-    },
-    'click #helpx' : function(e, t) {
-      e.preventDefault();
-      console.log("help");
     }
   });
 
@@ -135,6 +157,31 @@ if (Meteor.isClient) {
     'click #signin' : function(e, t) {
       e.preventDefault();
       console.log("login");
+      FlowLayout.render('layout-unauth', { content: "login"});
+    }
+  });
+
+  Template['help-login'].events({
+    'click #back' : function(e, t) {
+      e.preventDefault();
+      console.log("back");
+      FlowLayout.render('layout-unauth', { content: "login"});
+    }
+  });
+
+  Template['help-register'].events({
+    'click #back' : function(e, t) {
+      e.preventDefault();
+      console.log("back");
+      FlowLayout.render('layout-unauth', { content: "login"});
+    }
+  });
+
+  Template['app'].events({
+    'click #logout' : function(e, t) {
+      e.preventDefault();
+      console.log("app logout");
+      Meteor.logout();
       FlowLayout.render('layout-unauth', { content: "login"});
     }
   });

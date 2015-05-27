@@ -12,3 +12,6 @@ twbs:bootstrap
 accounts-password
 meteorhacks:flow-layout
 meteorhacks:flow-router
+accounts-google
+service-configuration
+http
