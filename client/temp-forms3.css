@@ -92,4 +92,31 @@
 {
     display: block;
     margin-top: 10px;
-}/* CSS declarations go here */
+}
+.social-buttons {
+    margin-bottom: 10px;
+}
+.at-sep {
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 15px;
+    color: #555;
+}
+.at-sep > p {
+    color: #aaa;
+}
+.at-sep:before {
+    left: -60%;
+}
+.at-sep:after {
+    right: -60%;
+}
+.at-sep:before, .at-sep:after {
+    display: block;
+    content: " ";
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+    position: absolute;
+    top: 48%;
+}
