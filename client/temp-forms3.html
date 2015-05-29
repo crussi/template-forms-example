@@ -68,8 +68,10 @@
     <div class="account-wall">
         <img class="profile-img" src="images/profile.png" alt="">
         {{#authFormBlock type="login" schema=schema action=action}}
-            {{> authInput type='email' field='email'}}
-            {{> authInput type='password' field='password'}}
+
+            {{> authInput id='login-email' type='email' field='email'}}
+            {{> authInput id='login-password' type='password' field='password'}}
+
         {{/authFormBlock}}
     </div>
     <a href="#" id="register" class="text-center new-account">Create an account </a>
@@ -88,12 +90,14 @@
 </template>
 
 <template name="authInput">
-  {{!-- The form elements in these components need to have the reactive-element class --}}
-    <input type={{type}} placeholder={{label}} class="form-control reactive-element" value={{value}}>
 
-  {{#if submitted}}
-    {{#if errorMessage}}<p class="error-message">{{errorMessage}}</p>{{/if}}
-  {{/if}}
+    <div class="form-group {{errorClass submitted errorMessage}}">
+        <input id={{id}} type={{type}} placeholder={{label}} class="form-control reactive-element" value={{value}}>
+
+    {{#if submitted}}
+        {{#if errorMessage}}<label class="control-label">{{errorMessage}}</label>{{/if}}
+    {{/if}}
+    </div>
 </template>
 
 <template name="authFormBlock">

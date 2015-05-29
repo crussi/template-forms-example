@@ -32,9 +32,9 @@
 {
     z-index: 2;
 }
-.form-auth input[type="email"],
-.form-auth input[type="text"],
-.form-auth input[type="password"]
+.form-auth div.form-group input[type="email"],
+.form-auth div.form-group input[type="text"],
+.form-auth div.form-group input[type="password"]
 {
     margin-bottom: -1px;
     border-bottom-left-radius: 0;
@@ -42,7 +42,7 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
-.form-auth input[type="password"]:last-of-type
+.form-auth div.form-group:last-of-type
 {
     margin-bottom: 10px;
 }
@@ -119,4 +119,16 @@
     width: 100%;
     position: absolute;
     top: 48%;
+}
+
+/* bootstrap overrides */
+.form-auth .form-group {
+    margin-bottom: 0px;
+}
+
+.has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
+    color: #dd4b39;
+}
+.has-error label {
+    font-weight: 400;
 }

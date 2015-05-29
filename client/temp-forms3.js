@@ -3,6 +3,13 @@ if (Meteor.isClient) {
       "passwordMismatch": "Passwords do not match"
     });
 
+  Template['authInput'].helpers({
+    errorClass : function(submitted, errorMessage) {
+      return (submitted && errorMessage) ? 'has-error' : '';
+    }
+
+  });
+
   Template['authFormBlock'].helpers({
     isLogin : function() {
       return this.type.toUpperCase() === 'LOGIN'
@@ -12,6 +19,7 @@ if (Meteor.isClient) {
     }
 
   });
+
   Template['loginform'].helpers({
     schema: function () {
       return new SimpleSchema({
