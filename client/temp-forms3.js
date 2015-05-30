@@ -136,21 +136,29 @@ if (Meteor.isClient) {
       FlowLayout.render('layout-unauth', { content: "help-" + this.type });
 
     },
-    'click #btn-google' : function(e, t) {
+    'click .social-google' : function(e, t) {
+        e.preventDefault();
+        console.log("login with Google");
+        return Meteor.loginWithGoogle({
+          requestPermissions: ['email']
+        }, function(error) {
+          if (error) {
+            console.log('google login error');
+            return console.log(error.reason);
+          } else {
+            console.log('google login success');
+            FlowLayout.render('layout-auth', { content: "app" });
+          }
+        });
+    },
+    'click .social-facebook' : function(e, t) {
       e.preventDefault();
-      console.log("login with Google");
-      return Meteor.loginWithGoogle({
-        requestPermissions: ['email']
-      }, function(error) {
-        if (error) {
-          console.log('google login error');
-          return console.log(error.reason);
-        } else {
-          console.log('google login success');
-          FlowLayout.render('layout-auth', { content: "app" });
-        }
-      });
-  }
+      console.log("login with Facebook - not yet supported");
+    },
+    'click .social-twitter' : function(e, t) {
+      e.preventDefault();
+      console.log("login with Twitter - not yet supported");
+    }
   });
 
   Template['loginform'].events({

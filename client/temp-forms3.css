@@ -5,6 +5,9 @@
     padding: 15px;
     margin: 0 auto;
 }
+.form-auth p {
+    text-align: center;
+}
 .form-auth .form-auth-heading, .form-auth .checkbox
 {
     margin-bottom: 10px;
@@ -93,18 +96,16 @@
     display: block;
     margin-top: 10px;
 }
-.social-buttons {
-    margin-bottom: 10px;
-}
 .at-sep {
     text-align: center;
     position: relative;
     overflow: hidden;
     margin-bottom: 15px;
-    color: #555;
+    /*color: #555;*/
 }
 .at-sep > p {
-    color: #aaa;
+    /*color: #aaa;*/
+    vertical-align: bottom;
 }
 .at-sep:before {
     left: -60%;
@@ -126,9 +127,63 @@
     margin-bottom: 0px;
 }
 
-.has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
-    color: #dd4b39;
+/*.has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {*/
+    /*color: #dd4b39;*/
+/*}*/
+/*.has-error label {*/
+    /*font-weight: 400;*/
+/*}*/
+.text-muted {
+    color: #999;
 }
-.has-error label {
-    font-weight: 400;
+.social-buttons {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.social-login-btn {
+    margin: 5px;
+    width: 20%;
+    font-size: 250%;
+    padding: 0;
+    color: #fff;
+    padding: 5px 12px;
+}
+.social-login-btn:hover {
+    color: #fff;
+}
+.social-google {
+    background-color: #da573b;
+    border-color: #be5238;
+}
+.social-google:hover{
+    background-color: #be5238;
+    border-color: #9b4631;
+}
+
+.social-twitter {
+    background-color: #1daee3;
+    border-color: #3997ba;
+}
+.social-twitter:hover {
+    background-color: #3997ba;
+    border-color: #347b95;
+}
+
+.social-facebook {
+    background-color: #4c699e;
+    border-color: #47618d;
+}
+.social-facebook:hover {
+    background-color: #47618d;
+    border-color: #3c5173;
+}
+
+.social-linkedin {
+    background-color: #4875B4;
+    border-color: #466b99;
+}
+.social-linkedin:hover {
+    background-color: #466b99;
+    border-color: #3b5a7c;
 }
