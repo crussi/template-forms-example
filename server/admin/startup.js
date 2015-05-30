@@ -31,5 +31,6 @@ createServiceConfiguration = function(service, clientId, secret) {
             return ServiceConfiguration.configurations.insert(config.generic);
     }
 };
-
+//1411870182471595
 createServiceConfiguration('google', '937484174984-udu5l6ovmq7c9t88mo2mchisvsrgpstu.apps.googleusercontent.com', 'DJWJ17_WPiPuR3vGyrd1AxIg')
+createServiceConfiguration('facebook', '1411870182471595', '26e945572d1609fa680cf4331cf95272')

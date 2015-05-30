@@ -3,6 +3,11 @@ if (Meteor.isClient) {
       "passwordMismatch": "Passwords do not match"
     });
 
+  Template['authFormBlock'].rendered = function() {
+    //this.isLogin = this.data.type.toUpperCase() === 'LOGIN';
+    //this.isRegister = this.data.type.toUpperCase() === 'REGISTER';
+  }
+
   Template['authInput'].helpers({
     errorClass : function(submitted, errorMessage) {
       return (submitted && errorMessage) ? 'has-error' : '';
@@ -12,11 +17,12 @@ if (Meteor.isClient) {
 
   Template['authFormBlock'].helpers({
     isLogin : function() {
-      return this.type.toUpperCase() === 'LOGIN'
-    },
-    isRegister : function() {
-      return this.type.toUpperCase() === 'REGISTER'
+      return this.type.toUpperCase() === 'LOGIN';
+
     }
+    //isRegister : function() {
+    //  return this.type.toUpperCase() === 'REGISTER';
+    //}
 
   });
 
@@ -138,22 +144,39 @@ if (Meteor.isClient) {
     },
     'click .social-google' : function(e, t) {
         e.preventDefault();
-        console.log("login with Google");
-        return Meteor.loginWithGoogle({
-          requestPermissions: ['email']
-        }, function(error) {
-          if (error) {
-            console.log('google login error');
-            return console.log(error.reason);
-          } else {
-            console.log('google login success');
-            FlowLayout.render('layout-auth', { content: "app" });
-          }
-        });
+
+        //if (Template.instance().isLogin()) {
+          return Meteor.loginWithGoogle({
+            requestPermissions: ['email']
+          }, function(error) {
+            if (error) {
+              console.log('google login error');
+              return console.log(error.reason);
+            } else {
+              console.log('google login success');
+              FlowLayout.render('layout-auth', { content: "app" });
+            }
+          });
+        //} else {
+        //  console.log("register with Google");
+        //
+        //}
+
     },
     'click .social-facebook' : function(e, t) {
       e.preventDefault();
-      console.log("login with Facebook - not yet supported");
+      return Meteor.loginWithFacebook({
+        requestPermissions: ['email']
+      }, function(error) {
+        if (error) {
+          console.log('facebook login error');
+          return console.log(error.reason);
+        } else {
+          console.log('facebook login success');
+          FlowLayout.render('layout-auth', { content: "app" });
+        }
+      });
+
     },
     'click .social-twitter' : function(e, t) {
       e.preventDefault();
