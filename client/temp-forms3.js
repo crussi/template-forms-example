@@ -1,12 +1,9 @@
-if (Meteor.isClient) {
-    SimpleSchema.messages({
-      "passwordMismatch": "Passwords do not match"
-    });
 
-  Template['authFormBlock'].rendered = function() {
-    //this.isLogin = this.data.type.toUpperCase() === 'LOGIN';
-    //this.isRegister = this.data.type.toUpperCase() === 'REGISTER';
-  }
+  SimpleSchema.messages({
+    "passwordMismatch": "Passwords do not match"
+  });
+
+
 
   Template['authInput'].helpers({
     errorClass : function(submitted, errorMessage) {
@@ -20,10 +17,6 @@ if (Meteor.isClient) {
       return this.type.toUpperCase() === 'LOGIN';
 
     }
-    //isRegister : function() {
-    //  return this.type.toUpperCase() === 'REGISTER';
-    //}
-
   });
 
   Template['loginform'].helpers({
@@ -74,6 +67,14 @@ if (Meteor.isClient) {
     }
   });
 
+  Template['loginform'].events({
+    'click #register' : function(e, t) {
+      e.preventDefault();
+      console.log("register");
+      FlowLayout.render('layout-unauth', { content: "register"});
+    }
+  });
+
   Template['registerform'].helpers({
     schema: function () {
       return new SimpleSchema({
@@ -96,11 +97,6 @@ if (Meteor.isClient) {
           label: 'Confirm password',
           min: 6,
           instructions: "Password of at least 6 chars",
-          //custom: function () {
-          //  if (this.value !== this.field('password').value) {
-          //    return "passwordMismatch";
-          //  }
-          //}
         }
       });
     },
@@ -133,6 +129,13 @@ if (Meteor.isClient) {
     }
   });
 
+  Template['registerform'].events({
+    'click #signin' : function(e, t) {
+      e.preventDefault();
+      console.log("login");
+      FlowLayout.render('layout-unauth', { content: "login"});
+    }
+  });
 
   Template['authFormBlock'].events({
     'click #help' : function(e, t) {
@@ -145,22 +148,17 @@ if (Meteor.isClient) {
     'click .social-google' : function(e, t) {
         e.preventDefault();
 
-        //if (Template.instance().isLogin()) {
-          return Meteor.loginWithGoogle({
-            requestPermissions: ['email']
-          }, function(error) {
-            if (error) {
-              console.log('google login error');
-              return console.log(error.reason);
-            } else {
-              console.log('google login success');
-              FlowLayout.render('layout-auth', { content: "app" });
-            }
-          });
-        //} else {
-        //  console.log("register with Google");
-        //
-        //}
+        return Meteor.loginWithGoogle({
+          requestPermissions: ['email']
+        }, function(error) {
+          if (error) {
+            console.log('google login error');
+            return console.log(error.reason);
+          } else {
+            console.log('google login success');
+            FlowLayout.render('layout-auth', { content: "app" });
+          }
+        });
 
     },
     'click .social-facebook' : function(e, t) {
@@ -180,30 +178,24 @@ if (Meteor.isClient) {
     },
     'click .social-twitter' : function(e, t) {
       e.preventDefault();
-      console.log("login with Twitter - not yet supported");
+      return Meteor.loginWithTwitter({
+        requestPermissions: ['email']
+      }, function(error) {
+        if (error) {
+          console.log('twitter login error');
+          return console.log(error.reason);
+        } else {
+          console.log('twitter login success');
+          FlowLayout.render('layout-auth', { content: "app" });
+        }
+      });
     }
   });
 
-  Template['loginform'].events({
-    'click #register' : function(e, t) {
-      e.preventDefault();
-      console.log("register");
-      FlowLayout.render('layout-unauth', { content: "register"});
-    }
-  });
-
-  Template['registerform'].events({
-    'click #signin' : function(e, t) {
-      e.preventDefault();
-      console.log("login");
-      FlowLayout.render('layout-unauth', { content: "login"});
-    }
-  });
 
   Template['help-login'].events({
     'click #back' : function(e, t) {
       e.preventDefault();
-      console.log("back");
       FlowLayout.render('layout-unauth', { content: "login"});
     }
   });
@@ -211,15 +203,13 @@ if (Meteor.isClient) {
   Template['help-register'].events({
     'click #back' : function(e, t) {
       e.preventDefault();
-      console.log("back");
-      FlowLayout.render('layout-unauth', { content: "login"});
+      FlowLayout.render('layout-unauth', { content: "register"});
     }
   });
 
   Template['app'].events({
     'click #logout' : function(e, t) {
       e.preventDefault();
-      console.log("app logout");
       Meteor.logout();
       FlowLayout.render('layout-unauth', { content: "login"});
     }
@@ -238,10 +228,5 @@ if (Meteor.isClient) {
     }
   });
 
-}
 
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
-}
+
